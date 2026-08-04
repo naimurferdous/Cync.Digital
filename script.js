@@ -191,6 +191,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ---------- Pre-select "Interested In" from URL (e.g. Hire Me buttons) ---------- */
+  const serviceSelect = document.getElementById('service');
+  if (serviceSelect) {
+    const params = new URLSearchParams(window.location.search);
+    const interest = params.get('interest');
+    if (interest === 'fulltime') {
+      serviceSelect.value = 'Full-Time Opportunity';
+    }
+  }
+
   /* ---------- Contact form (Formspree via fetch/AJAX) ---------- */
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
