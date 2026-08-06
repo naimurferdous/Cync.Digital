@@ -40,7 +40,7 @@
   .who .n{ font-size:12.5px; color:#E4E7EC; font-weight:600; }
   .who .r{ font-size:10.5px; color:#6B7280; }
   .main{ flex:1; min-width:0; }
-  .topbar{ background:var(--card); border-bottom:1px solid var(--border); padding:16px 30px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }
+  .topbar{ background:var(--card); border-bottom:1px solid var(--border); padding:14px 20px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }
   .topbar h1{ font-size:16.5px; font-weight:700; }
   .topbar .path{ font-size:11.5px; color:var(--muted-2); font-family:var(--mono); margin-top:2px; }
   .topbar-right{ display:flex; align-items:center; gap:10px; }
@@ -93,6 +93,23 @@
     .kpi-row{ grid-template-columns:repeat(2,1fr); } .grid-2{ grid-template-columns:1fr; }
     .deal-grid{ grid-template-columns:1fr; } .sidebar{ display:none; }
   }
+  @media (max-width:640px){
+    .content{ padding:16px 16px 50px; }
+    .topbar{ padding:12px 16px; }
+    .topbar h1{ font-size:15px; }
+    .card{ padding:16px 16px; }
+    .card-head{ flex-wrap:wrap; gap:8px; }
+    .kpi-row{ grid-template-columns:1fr 1fr; gap:10px; }
+    .kpi-card{ padding:14px 14px; }
+    .kpi-card .val{ font-size:20px; }
+    .fbar-row{ grid-template-columns:100px 1fr 44px; gap:8px; }
+    .fbar-row .flabel{ font-size:11px; }
+    .fbar-row .fval{ font-size:11px; }
+    .deal-head{ flex-wrap:wrap; gap:8px; }
+    .deal-head h2{ font-size:15px; }
+    table{ display:block; overflow-x:auto; white-space:nowrap; }
+    .btn-export{ display:none; }
+  }
 </style>
 </head>
 <body>
@@ -125,7 +142,7 @@
     </div>
 
     <div style="background:#FDF2E3; border-bottom:1px solid #E4E7EC; padding:10px 30px; font-size:11.5px; line-height:1.6; color:#6B7280; font-family:'IBM Plex Mono','JetBrains Mono',monospace;">
-      <strong style="color:#1A1F27;">Reporting capability sample.</strong> KPIs above and funnel totals are real figures from this engagement. Individual partner rows, chart proportions, and the deal-room writeup below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
+      KPIs above and funnel totals are real figures from this engagement. Individual partner rows, chart proportions, and the deal-room writeup below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
     </div>
 
     <div class="content">
@@ -168,7 +185,7 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-head"><div><h3>Sample Partner Records</h3><div class="sub">Anonymized sample rows</div></div></div>
+          <div class="card-head"><div><h3>Partner Records</h3><div class="sub">Anonymized rows</div></div></div>
           <table>
             <thead><tr><th>ID</th><th>Type</th><th>Region</th><th>Deal Structure</th><th>Status</th><th>MoM Trend</th></tr></thead>
             <tbody>
