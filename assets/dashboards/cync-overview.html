@@ -3,185 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cync Digital — Affiliate Performance Overview</title>
+<title>Cync Digital — Partner Performance Console</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root{
-    --ink:#0A0E13; --inkraised:#12181F; --inkline:#1E2730;
-    --paper:#ECEFF2; --paperdim:#8B96A3; --paperdim-2:#5A6572;
-    --signal:#E9A23B; --signal-2:#B97A22; --signal-soft:rgba(233,162,59,0.14);
-    --sync:#35D6C0; --red:#E56A6A;
+    --navy:#12181F; --navbar:#0F1620;
+    --bg:#F5F6F8; --card:#FFFFFF; --border:#E4E7EC;
+    --text:#1A1F27; --muted:#6B7280; --muted-2:#9AA2AE;
+    --signal:#E9A23B; --signal-soft:#FDF2E3;
+    --blue:#2D6CDF; --blue-soft:#EAF1FE;
+    --green:#16A34A; --green-soft:#E8F7EE;
+    --sync:#0D9488;
     --mono:'IBM Plex Mono','JetBrains Mono',ui-monospace,monospace;
-    --disp:'Space Grotesk',-apple-system,sans-serif;
-    --body:'Inter',-apple-system,sans-serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    font-family:var(--body); color:var(--paper);
-    background:
-      radial-gradient(ellipse 1000px 600px at 20% -10%, rgba(233,162,59,0.09), transparent 60%),
-      radial-gradient(ellipse 800px 500px at 100% 10%, rgba(53,214,192,0.05), transparent 55%),
-      linear-gradient(180deg,var(--ink),#050709);
-    min-height:100vh; padding:36px 20px 70px;
-  }
-  .wrap{ max-width:1180px; margin:0 auto; }
+  body{ font-family:var(--sans); background:var(--bg); color:var(--text); font-size:14px; }
+  a{ text-decoration:none; color:inherit; }
 
-  .brandbar{
-    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
-    background:var(--inkraised); border:1px solid var(--inkline); border-radius:14px;
-    padding:16px 22px; margin-bottom:22px;
-  }
-  .brandbar .left{ display:flex; align-items:center; gap:10px; }
-  .brandbar .mark{ width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg,var(--signal),var(--signal-2)); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:var(--ink); }
-  .brandbar .bname{ font-family:var(--disp); font-weight:600; font-size:15px; }
-  .brandbar .right{ font-family:var(--mono); font-size:11.5px; color:var(--paperdim-2); }
+  .navbar{ background:var(--navbar); color:#C7CCD4; padding:0 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .navbar .brand{ display:flex; align-items:center; gap:9px; padding:14px 0; }
+  .navbar .brand .mark{ width:22px; height:22px; border-radius:6px; background:linear-gradient(135deg,var(--signal),#B97A22); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:11px; color:var(--navy); }
+  .navbar .brand .name{ font-weight:700; font-size:13.5px; color:#fff; letter-spacing:0.01em; }
+  .navtabs{ display:flex; gap:20px; flex-wrap:wrap; }
+  .navtabs span{ font-size:12.5px; color:#8891A0; padding:14px 0; border-bottom:2px solid transparent; }
+  .navtabs span.active{ color:#fff; border-bottom-color:var(--signal); }
 
-  .section-title{ font-family:var(--disp); font-size:20px; font-weight:600; margin:30px 0 16px; display:flex; align-items:center; gap:10px; }
-  .section-title .tag{ font-family:var(--mono); font-size:10.5px; color:var(--signal); border:1px solid rgba(233,162,59,0.3); padding:3px 9px; border-radius:20px; }
+  .topbar{ background:var(--card); border-bottom:1px solid var(--border); padding:12px 24px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; }
+  .topbar .path{ font-size:11.5px; color:var(--muted-2); font-family:var(--mono); }
+  .topbar-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .chip{ font-size:11.5px; padding:5px 11px; border:1px solid var(--border); border-radius:7px; color:var(--muted); font-family:var(--mono); background:#FAFBFC; }
 
-  /* KPI CARDS */
-  .kpi-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
-  .kpi{
-    position:relative; overflow:hidden;
-    background:var(--inkraised); border:1px solid var(--inkline); border-radius:14px;
-    padding:22px 20px 20px;
-  }
-  .kpi::before{
-    content:''; position:absolute; top:-40%; left:-30%; width:140%; height:140%;
-    background:radial-gradient(circle at 25% 15%, rgba(233,162,59,0.20), transparent 55%);
-    pointer-events:none;
-  }
-  .kpi .val{ font-family:var(--disp); font-size:30px; font-weight:700; color:var(--signal); position:relative; z-index:1; }
-  .kpi .lbl{ font-size:12.5px; color:var(--paperdim); margin-top:8px; position:relative; z-index:1; }
+  .banner{ background:var(--signal-soft); border-bottom:1px solid var(--border); padding:10px 24px; font-size:11.5px; line-height:1.6; color:var(--muted); font-family:var(--mono); }
+  .banner strong{ color:var(--text); }
 
-  /* MAIN GRID */
-  .main-grid{ display:grid; grid-template-columns:1.5fr 1fr; gap:16px; margin-top:16px; }
-  .panel{ background:var(--inkraised); border:1px solid var(--inkline); border-radius:14px; padding:22px 24px; }
-  .panel-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; }
-  .panel-head h3{ font-family:var(--disp); font-size:15px; font-weight:600; }
-  .panel-head .sub{ font-size:11px; color:var(--paperdim-2); font-family:var(--mono); }
-  .chart-box{ height:230px; }
+  .content{ padding:20px 24px 60px; max-width:1280px; margin:0 auto; }
 
-  /* TABLE */
+  .kpi-row{ display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:20px; }
+  .kpi-card{ background:var(--card); border:1px solid var(--border); border-radius:9px; padding:14px 16px; }
+  .kpi-card .lbl{ font-size:10.5px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.04em; }
+  .kpi-card .val{ font-family:var(--mono); font-size:21px; font-weight:700; margin-top:8px; color:var(--text); }
+  .kpi-card .sub{ font-size:10px; color:var(--muted-2); margin-top:3px; }
+
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .card{ background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px; margin-bottom:16px; }
+  .card-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+  .card-head h3{ font-size:13.5px; font-weight:700; }
+  .chart-box{ height:210px; }
+
   table{ width:100%; border-collapse:collapse; }
-  thead th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paperdim-2); padding:0 10px 10px; border-bottom:1px solid var(--inkline); font-weight:600; }
-  tbody td{ padding:12px 10px; border-bottom:1px solid rgba(236,239,242,0.05); font-size:12.5px; color:var(--paper); }
+  thead th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted-2); padding:0 10px 8px; border-bottom:1px solid var(--border); font-weight:600; }
+  tbody td{ padding:10px 10px; border-bottom:1px solid #F0F1F3; font-size:12.5px; }
   tbody tr:last-child td{ border-bottom:none; }
-  .co{ font-weight:600; }
-  .muted-cell{ color:var(--paperdim); font-family:var(--mono); font-size:11.5px; }
-  .dealpill{ font-family:var(--mono); font-size:10.5px; padding:3px 9px; border-radius:20px; border:1px solid rgba(233,162,59,0.35); color:var(--signal); display:inline-block; }
+  tbody tr.totals td{ font-weight:700; border-top:1px solid var(--border); border-bottom:none; padding-top:10px; }
 
-  /* QUALITY BARS */
-  .quality-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:16px; margin-top:16px; }
-  .qrow{ margin-bottom:16px; }
-  .qrow:last-child{ margin-bottom:0; }
-  .qrow .qtop{ display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:7px; }
-  .qrow .qtop .qname{ color:var(--paper); font-weight:500; }
-  .qrow .qtop .qval{ font-family:var(--mono); color:var(--signal); }
-  .qtrack{ height:8px; border-radius:20px; background:rgba(236,239,242,0.07); overflow:hidden; }
-  .qfill{ height:100%; border-radius:20px; background:linear-gradient(90deg,var(--signal-2),var(--signal)); }
+  .region-row{ display:grid; grid-template-columns:110px 1fr 60px; align-items:center; gap:10px; margin-bottom:10px; }
+  .region-row:last-child{ margin-bottom:0; }
+  .region-row .rname{ font-size:12.5px; font-weight:600; }
+  .rtrack{ background:#EEF0F3; border-radius:5px; height:18px; overflow:hidden; }
+  .rfill{ height:100%; border-radius:5px; background:linear-gradient(90deg,var(--blue),#5B8DEA); }
+  .region-row .rval{ font-family:var(--mono); font-size:11.5px; font-weight:700; text-align:right; }
 
-  .deal-structs{ display:flex; flex-direction:column; gap:10px; }
-  .dstruct{ background:var(--ink); border:1px solid var(--inkline); border-radius:10px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
-  .dstruct .name{ font-family:var(--disp); font-size:14px; font-weight:600; }
-  .dstruct .desc{ font-size:11px; color:var(--paperdim-2); margin-top:2px; }
-  .dstruct .used{ font-family:var(--mono); font-size:11px; color:var(--sync); }
+  .note{ font-size:11px; color:var(--muted-2); margin-top:12px; font-style:italic; line-height:1.5; }
 
-  .footnote{ margin-top:22px; text-align:center; font-size:11px; color:var(--paperdim-2); font-family:var(--mono); }
-
-  @media (max-width:920px){
-    .kpi-row{ grid-template-columns:repeat(2,1fr); }
-    .main-grid, .quality-grid{ grid-template-columns:1fr; }
+  @media (max-width:900px){
+    .kpi-row{ grid-template-columns:repeat(3,1fr); }
+    .grid-2{ grid-template-columns:1fr; }
+  }
+  @media (max-width:640px){
+    .navtabs{ display:none; }
+    .content{ padding:16px 16px 50px; }
+    .kpi-row{ grid-template-columns:1fr 1fr; gap:10px; }
+    .kpi-card{ padding:12px 12px; }
+    .kpi-card .val{ font-size:18px; }
+    .card{ padding:14px 16px; }
+    .region-row{ grid-template-columns:80px 1fr 44px; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="brandbar">
-    <div class="left"><div class="mark">C</div><div class="bname">Cync Digital</div></div>
-    <div class="right">Career track record · 2023–2026</div>
+<div class="navbar">
+  <div class="brand"><div class="mark">C</div><div class="name">CYNC DIGITAL</div></div>
+  <div class="navtabs">
+    <span class="active">Overview</span>
+    <span>Engagements</span>
+    <span>Partners</span>
+    <span>Channels</span>
+    <span>Regions</span>
+    <span>Deal Room</span>
   </div>
+</div>
 
-  <div style="background:rgba(233,162,59,0.08); border:1px solid rgba(233,162,59,0.25); border-radius:10px; padding:10px 16px; margin-bottom:22px; font-size:11.5px; line-height:1.6; color:var(--paperdim); font-family:var(--mono);">
-    The five KPIs, engagement table, and deal structures below are real career figures. Onboarding/traffic-quality bars are modeled to demonstrate reporting format, not exported data.
+<div class="topbar">
+  <div class="path">partner-console / overview</div>
+  <div class="topbar-right">
+    <span class="chip">2023 – 2026</span>
+    <span class="chip">NetRefer + HubSpot</span>
   </div>
+</div>
 
-  <div class="section-title">Affiliate Performance Overview <span class="tag">Career-to-date</span></div>
+<div class="banner">
+  <strong>Career performance view.</strong> KPI totals and the By Engagement table below are real career figures. Channel mix and regional split are representative breakdowns of the real totals, not exported reports.
+</div>
+
+<div class="content">
+
   <div class="kpi-row">
-    <div class="kpi"><div class="val">340+</div><div class="lbl">Partner relationships built</div></div>
-    <div class="kpi"><div class="val">240+</div><div class="lbl">Registered partners scaled</div></div>
-    <div class="kpi"><div class="val">33%+</div><div class="lbl">Partner retention rate</div></div>
-    <div class="kpi"><div class="val">40→25%</div><div class="lbl">Churn reduced</div></div>
-    <div class="kpi"><div class="val">20%+</div><div class="lbl">MoM conversion growth</div></div>
+    <div class="kpi-card"><div class="lbl">Partners</div><div class="val">340+</div><div class="sub">relationships built</div></div>
+    <div class="kpi-card"><div class="lbl">Retention</div><div class="val">33%+</div><div class="sub">active partner rate</div></div>
+    <div class="kpi-card"><div class="lbl">Churn</div><div class="val">40→25%</div><div class="sub">rate reduced</div></div>
+    <div class="kpi-card"><div class="lbl">MoM Growth</div><div class="val">20%+</div><div class="sub">conversion growth</div></div>
+    <div class="kpi-card"><div class="lbl">Campaigns</div><div class="val">20+</div><div class="sub">launched, Emami</div></div>
+    <div class="kpi-card"><div class="lbl">Engagements</div><div class="val">4</div><div class="sub">2023 – present</div></div>
   </div>
 
-  <div class="main-grid">
-    <div class="panel">
-      <div class="panel-head"><h3>Partner Network Growth</h3><span class="sub">2023 – 2026 · indexed by engagement</span></div>
-      <div class="chart-box"><canvas id="growthChart"></canvas></div>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><h3>Engagement Breakdown</h3><span class="sub">real, by employer</span></div>
-      <table>
-        <thead><tr><th>Engagement</th><th>Partners</th><th>Structure</th></tr></thead>
-        <tbody>
-          <tr><td class="co">ITLABS22</td><td class="muted-cell">100+</td><td><span class="dealpill">CPA/RevShare/Hybrid</span></td></tr>
-          <tr><td class="co">Emami Bangladesh</td><td class="muted-cell">50+ trade</td><td><span class="dealpill">Trade & Distribution</span></td></tr>
-          <tr><td class="co">Malta Fintech</td><td class="muted-cell">240+</td><td><span class="dealpill">CPA/Hybrid</span></td></tr>
-          <tr><td class="co">Cync Digital</td><td class="muted-cell">Consulting</td><td><span class="dealpill">Strategy build</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section-title">Partner Quality &amp; Deal Structures <span class="tag">Malta Fintech, 2025–26</span></div>
-  <div class="quality-grid">
-    <div class="panel">
-      <div class="qrow"><div class="qtop"><span class="qname">Active partner retention (90d+)</span><span class="qval">33%</span></div><div class="qtrack"><div class="qfill" style="width:33%;"></div></div></div>
-      <div class="qrow"><div class="qtop"><span class="qname">Onboarding completion (Day 7)</span><span class="qval">61%</span></div><div class="qtrack"><div class="qfill" style="width:61%;"></div></div></div>
-      <div class="qrow"><div class="qtop"><span class="qname">Traffic quality pass rate</span><span class="qval">≈88%</span></div><div class="qtrack"><div class="qfill" style="width:88%;"></div></div></div>
-      <div class="qrow"><div class="qtop"><span class="qname">Churn reduced (40%→25%)</span><span class="qval">-15pt</span></div><div class="qtrack"><div class="qfill" style="width:62%;"></div></div></div>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><h3>Deal structures used</h3><span class="sub">real, all 3 negotiated directly</span></div>
-      <div class="deal-structs">
-        <div class="dstruct"><div><div class="name">CPA</div><div class="desc">Fixed per-acquisition, tiered by product</div></div><div class="used">● Active</div></div>
-        <div class="dstruct"><div><div class="name">RevShare</div><div class="desc">Up to 45%, applied to trading/crypto partners</div></div><div class="used">● Active</div></div>
-        <div class="dstruct"><div><div class="name">Hybrid</div><div class="desc">Reduced CPA + retention-linked RevShare kicker</div></div><div class="used">● Active</div></div>
+  <div class="card">
+    <div class="card-head"><h3>By Engagement</h3><span class="chip">Indexed to 100 · 2023–2026</span></div>
+    <div class="grid-2" style="margin-bottom:0;">
+      <div class="chart-box"><canvas id="engagementChart"></canvas></div>
+      <div>
+        <table>
+          <thead><tr><th>Engagement</th><th>Partners</th><th>Structure</th></tr></thead>
+          <tbody>
+            <tr><td>ITLABS22</td><td class="mono">100+</td><td>CPA/RevShare/Hybrid</td></tr>
+            <tr><td>Emami Bangladesh</td><td>50+ trade</td><td>Trade &amp; Distribution</td></tr>
+            <tr><td>Malta Fintech</td><td>240+</td><td>CPA/Hybrid</td></tr>
+            <tr><td>Cync Digital</td><td>Consulting</td><td>Strategy build</td></tr>
+            <tr class="totals"><td>Totals</td><td>340+</td><td></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <div class="footnote">Built to demonstrate reporting fluency across NetRefer and HubSpot.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head"><h3>By Channel</h3><span class="chip">Representative mix</span></div>
+      <div class="chart-box"><canvas id="channelChart"></canvas></div>
+      <div class="note">Mix is a representative breakdown of recruitment channels used across engagements (creator/KOL, publisher networks, trade &amp; distribution, direct/community) — the 340+ total is real.</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>By Region</h3><span class="chip">Representative mix</span></div>
+      <div class="region-row"><div class="rname">APAC</div><div class="rtrack"><div class="rfill" style="width:34%;"></div></div><div class="rval">34%</div></div>
+      <div class="region-row"><div class="rname">EU</div><div class="rtrack"><div class="rfill" style="width:29%;"></div></div><div class="rval">29%</div></div>
+      <div class="region-row"><div class="rname">MENA</div><div class="rtrack"><div class="rfill" style="width:18%;"></div></div><div class="rval">18%</div></div>
+      <div class="region-row"><div class="rname">South Asia</div><div class="rtrack"><div class="rfill" style="width:19%;"></div></div><div class="rval">19%</div></div>
+      <div class="note">Regional split is a representative estimate across engagements — not an exported geo report.</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
   Chart.defaults.font.family = "'IBM Plex Mono','JetBrains Mono',monospace";
   Chart.defaults.font.size = 10.5;
-  Chart.defaults.color = '#5A6572';
+  Chart.defaults.color = '#9AA2AE';
+  const gridColor = '#EEF0F3';
 
-  new Chart(document.getElementById('growthChart'), {
+  new Chart(document.getElementById('engagementChart'), {
     type: 'line',
     data: {
       labels: ['ITLABS22\n2023','Emami\n2024','Malta\n(start)','Malta\nQ2','Malta\nQ3','Malta\n(current)'],
-      datasets: [{
-        data: [100, 100, 145, 190, 225, 240],
-        borderColor: '#E9A23B',
-        backgroundColor: 'rgba(233,162,59,0.14)',
-        fill: true, tension: 0.4,
-        pointRadius: 4, pointBackgroundColor: '#E9A23B', pointBorderColor:'#0A0E13',
-        borderWidth: 2.5
-      }]
+      datasets: [{ data:[100,100,145,190,225,240], borderColor:'#E9A23B', backgroundColor:'rgba(233,162,59,0.10)',
+        fill:true, tension:0.35, pointRadius:3, pointBackgroundColor:'#E9A23B', borderWidth:2 }]
     },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false } },
-      scales:{
-        x:{ grid:{ display:false }, ticks:{ color:'#8B96A3' } },
-        y:{ grid:{ color:'rgba(236,239,242,0.06)' }, ticks:{ color:'#8B96A3', callback:v=>v+'+' } }
-      }
-    }
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      scales:{ x:{ grid:{display:false} }, y:{ grid:{color:gridColor}, ticks:{callback:v=>v+'+'} } } }
+  });
+
+  new Chart(document.getElementById('channelChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Creator / KOL','Publisher networks','Trade & distribution','Direct / community'],
+      datasets: [{ data:[35,25,22,18], backgroundColor:['#E9A23B','#2D6CDF','#0D9488','#9AA2AE'], borderWidth:0 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:10, padding:12}}} }
   });
 </script>
 </body>
