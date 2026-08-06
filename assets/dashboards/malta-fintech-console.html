@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malta Fintech — Affiliate Growth Console</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --sidebar:#12161D; --sidebar-hover:#1B212B;
+    --bg:#F5F6F8; --card:#FFFFFF; --border:#E4E7EC;
+    --text:#1A1F27; --muted:#6B7280; --muted-2:#9AA2AE;
+    --blue:#2D6CDF; --blue-soft:#EAF1FE;
+    --green:#16A34A; --green-soft:#E8F7EE;
+    --amber:#D97706; --amber-soft:#FDF2E3;
+    --red:#DC2626; --red-soft:#FDECEC;
+    --mono:'IBM Plex Mono','JetBrains Mono',ui-monospace,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family:var(--sans); background:var(--bg); color:var(--text); font-size:14px; }
+  a{ text-decoration:none; color:inherit; }
+  .shell{ display:flex; min-height:100vh; }
+  .sidebar{ width:222px; background:var(--sidebar); color:#C7CCD4; flex-shrink:0; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+  .brand{ padding:22px 20px 18px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .brand .logo{ display:flex; align-items:center; gap:9px; }
+  .brand .dot{ width:9px; height:9px; border-radius:2px; background:var(--blue); }
+  .brand .name{ font-weight:700; font-size:13.5px; color:#fff; letter-spacing:0.01em; }
+  .brand .tag{ font-size:11px; color:#6B7280; margin-top:4px; font-family:var(--mono); }
+  .nav{ padding:14px 10px; flex:1; }
+  .nav .section-lbl{ font-size:10.5px; color:#5B6472; text-transform:uppercase; letter-spacing:0.08em; padding:12px 10px 6px; }
+  .nav-item{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; font-size:13px; color:#AEB4BF; cursor:pointer; margin-bottom:1px; }
+  .nav-item .ic{ width:15px; text-align:center; font-size:13px; opacity:0.8; }
+  .nav-item:hover{ background:var(--sidebar-hover); color:#fff; }
+  .nav-item.active{ background:rgba(45,108,223,0.16); color:#fff; box-shadow:inset 2px 0 0 var(--blue); }
+  .nav-item.active .ic{ opacity:1; color:var(--blue); }
+  .sidebar-foot{ padding:16px 20px; border-top:1px solid rgba(255,255,255,0.08); }
+  .who{ display:flex; align-items:center; gap:9px; }
+  .avatar{ width:28px; height:28px; border-radius:6px; background:linear-gradient(135deg,#2D6CDF,#6EA0FF); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; }
+  .who .n{ font-size:12.5px; color:#E4E7EC; font-weight:600; }
+  .who .r{ font-size:10.5px; color:#6B7280; }
+  .main{ flex:1; min-width:0; }
+  .topbar{ background:var(--card); border-bottom:1px solid var(--border); padding:16px 30px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; }
+  .topbar h1{ font-size:16.5px; font-weight:700; }
+  .topbar .path{ font-size:11.5px; color:var(--muted-2); font-family:var(--mono); margin-top:2px; }
+  .topbar-right{ display:flex; align-items:center; gap:10px; }
+  .chip{ font-size:12px; padding:6px 12px; border:1px solid var(--border); border-radius:7px; color:var(--muted); font-family:var(--mono); background:#FAFBFC; }
+  .btn-export{ font-size:12.5px; padding:7px 14px; border-radius:7px; background:var(--text); color:#fff; font-weight:600; border:none; }
+  .content{ padding:26px 30px 60px; max-width:1240px; }
+  .panel-view{ display:none; }
+  .panel-view.active{ display:block; }
+  .kpi-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px; }
+  .kpi-card{ background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
+  .kpi-card .top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .kpi-card .lbl{ font-size:11.5px; color:var(--muted); font-weight:500; }
+  .kpi-card .badge{ font-size:10.5px; font-family:var(--mono); padding:2px 6px; border-radius:5px; font-weight:600; background:var(--green-soft); color:var(--green); }
+  .kpi-card .val{ font-family:var(--mono); font-size:24px; font-weight:700; margin-top:8px; }
+  .grid-2{ display:grid; grid-template-columns:1.3fr 1fr; gap:16px; margin-bottom:16px; }
+  .card{ background:var(--card); border:1px solid var(--border); border-radius:10px; padding:20px 22px; margin-bottom:16px; }
+  .card-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .card-head h3{ font-size:13.5px; font-weight:700; }
+  .card-head .sub{ font-size:11px; color:var(--muted-2); margin-top:2px; }
+  .chart-box{ height:220px; }
+  .note{ font-size:11px; color:var(--muted-2); margin-top:12px; font-style:italic; line-height:1.5; }
+  table{ width:100%; border-collapse:collapse; }
+  thead th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted-2); padding:0 14px 10px; border-bottom:1px solid var(--border); font-weight:600; }
+  tbody td{ padding:12px 14px; border-bottom:1px solid #F0F1F3; font-size:12.5px; }
+  tbody tr:hover{ background:#FAFBFC; }
+  .pid{ font-family:var(--mono); color:var(--muted); font-size:11.5px; }
+  .pname{ font-weight:600; }
+  .pill{ font-size:10.5px; font-weight:600; padding:3px 9px; border-radius:20px; display:inline-block; }
+  .pill.active{ background:var(--green-soft); color:var(--green); }
+  .pill.onboarding{ background:var(--amber-soft); color:var(--amber); }
+  .pill.churned{ background:var(--red-soft); color:var(--red); }
+  .tier{ font-family:var(--mono); font-size:11px; color:var(--muted); }
+  .trend-up{ color:var(--green); font-family:var(--mono); font-size:11.5px; }
+  .trend-down{ color:var(--red); font-family:var(--mono); font-size:11.5px; }
+  .funnel{ display:flex; flex-direction:column; gap:10px; }
+  .fbar-row{ display:grid; grid-template-columns:170px 1fr 80px; align-items:center; gap:12px; }
+  .fbar-row .flabel{ font-size:12px; font-weight:600; }
+  .fbar-track{ background:#EEF0F3; border-radius:5px; height:24px; }
+  .fbar-fill{ height:100%; border-radius:5px; }
+  .fbar-row .fval{ font-family:var(--mono); font-size:12px; font-weight:700; text-align:right; }
+  .deal-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:16px; }
+  .deal-cell{ background:#FAFBFC; border:1px solid var(--border); border-radius:9px; padding:16px 18px; }
+  .deal-cell .k{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted-2); font-weight:700; margin-bottom:8px; }
+  .deal-cell p{ font-size:13px; line-height:1.6; color:var(--text); }
+  .status-closed{ font-size:11px; font-weight:700; color:var(--green); background:var(--green-soft); padding:5px 12px; border-radius:20px; }
+  .deal-head{ display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; margin-bottom:18px; border-bottom:1px solid var(--border); }
+  .deal-head .did{ font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .deal-head h2{ font-size:17px; margin-top:4px; }
+  @media (max-width:980px){
+    .kpi-row{ grid-template-columns:repeat(2,1fr); } .grid-2{ grid-template-columns:1fr; }
+    .deal-grid{ grid-template-columns:1fr; } .sidebar{ display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="sidebar">
+    <div class="brand">
+      <div class="logo"><span class="dot"></span><span class="name">MALTA FINTECH CONSOLE</span></div>
+      <div class="tag">Malta (Remote) · Feb 2025–May 2026</div>
+    </div>
+    <div class="nav">
+      <div class="section-lbl">Engagement</div>
+      <div class="nav-item active" data-view="overview"><span class="ic">◱</span> Overview</div>
+      <div class="nav-item" data-view="pipeline"><span class="ic">⇄</span> Partner Pipeline</div>
+      <div class="nav-item" data-view="activation"><span class="ic">▤</span> Activation Sequence</div>
+      <div class="nav-item" data-view="deal"><span class="ic">◈</span> Deal Room</div>
+    </div>
+    <div class="sidebar-foot">
+      <div class="who"><div class="avatar">NF</div><div><div class="n">Naimur Ferdous</div><div class="r">Affiliate Marketing Manager</div></div></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div><h1 id="viewTitle">Overview</h1><div class="path" id="viewPath">malta-fintech / overview</div></div>
+      <div class="topbar-right">
+        <span class="chip">Feb 2025 – May 2026</span>
+        <span class="chip">HubSpot + NetRefer</span>
+        <button class="btn-export">Portfolio Reference Build</button>
+      </div>
+    </div>
+
+    <div style="background:#FDF2E3; border-bottom:1px solid #E4E7EC; padding:10px 30px; font-size:11.5px; line-height:1.6; color:#6B7280; font-family:'IBM Plex Mono','JetBrains Mono',monospace;">
+      <strong style="color:#1A1F27;">Reporting capability sample.</strong> KPIs above and funnel totals are real figures from this engagement. Individual partner rows, chart proportions, and the deal-room writeup below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
+    </div>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <div class="panel-view active" id="view-overview">
+        <div class="kpi-row">
+          <div class="kpi-card"><div class="top"><span class="lbl">Registered partners</span><span class="badge">▲ network</span></div><div class="val">240+</div></div>
+          <div class="kpi-card"><div class="top"><span class="lbl">Active collaborators</span><span class="badge">▲ live</span></div><div class="val">80+</div></div>
+          <div class="kpi-card"><div class="top"><span class="lbl">Retention rate</span><span class="badge">▲ 33%</span></div><div class="val">33%+</div></div>
+          <div class="kpi-card"><div class="top"><span class="lbl">Churn rate</span><span class="badge">▼ 15pt</span></div><div class="val">40→25%</div></div>
+          <div class="kpi-card"><div class="top"><span class="lbl">MoM conversion growth</span><span class="badge">▲ ramp</span></div><div class="val">20%+</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div><h3>Role Summary</h3><div class="sub">Affiliate Marketing Manager — International Fintech, Malta</div></div></div>
+          <p style="font-size:13px; line-height:1.7; color:#374151;">Drove market expansion by developing and maintaining relationships with 240+ registered partners and 80+ active collaborators across multiple regions — recruiting content creators, publishers, and strategic partners across YouTube, Telegram, Discord, and X. Negotiated CPA and hybrid structures contributing to 20%+ MoM first-time conversion growth post-onboarding ramp, and streamlined onboarding using HubSpot automation across Day 1/3/7 touchpoints.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div><h3>New Trader Activation Index</h3><div class="sub">Indexed to 100 · models the stated 20%+ MoM growth</div></div></div>
+            <div class="chart-box"><canvas id="trendChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div><h3>Churn Rate</h3><div class="sub">Before vs. after retention-linked onboarding</div></div></div>
+            <div class="chart-box"><canvas id="churnChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PIPELINE -->
+      <div class="panel-view" id="view-pipeline">
+        <div class="card">
+          <div class="card-head"><div><h3>Partner Funnel</h3><div class="sub">Real cumulative figures from the program</div></div></div>
+          <div class="funnel">
+            <div class="fbar-row"><div class="flabel">Registered partners</div><div class="fbar-track"><div class="fbar-fill" style="width:100%; background:#2D6CDF;"></div></div><div class="fval">240+</div></div>
+            <div class="fbar-row"><div class="flabel">Active collaborators</div><div class="fbar-track"><div class="fbar-fill" style="width:33%; background:#16A34A;"></div></div><div class="fval">80+</div></div>
+            <div class="fbar-row"><div class="flabel">Retained (33%+ of active)</div><div class="fbar-track"><div class="fbar-fill" style="width:11%; background:#0D9488;"></div></div><div class="fval">~26</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><h3>Sample Partner Records</h3><div class="sub">Anonymized sample rows</div></div></div>
+          <table>
+            <thead><tr><th>ID</th><th>Type</th><th>Region</th><th>Deal Structure</th><th>Status</th><th>MoM Trend</th></tr></thead>
+            <tbody>
+              <tr><td class="pid">PTR-0142</td><td class="pname">Crypto KOL — Telegram</td><td>APAC</td><td class="tier">Hybrid · CPA+RevShare</td><td><span class="pill active">Active</span></td><td class="trend-up">▲ 24%</td></tr>
+              <tr><td class="pid">PTR-0138</td><td class="pname">Trading Content Creator</td><td>MENA</td><td class="tier">RevShare · 45%</td><td><span class="pill active">Active</span></td><td class="trend-up">▲ 18%</td></tr>
+              <tr><td class="pid">PTR-0151</td><td class="pname">Forex Publisher Network</td><td>EU</td><td class="tier">CPA · Tier 2</td><td><span class="pill onboarding">Onboarding</span></td><td class="trend-up">▲ 6%</td></tr>
+              <tr><td class="pid">PTR-0119</td><td class="pname">Discord Community Lead</td><td>APAC</td><td class="tier">Hybrid · 90d step-up</td><td><span class="pill active">Active</span></td><td class="trend-up">▲ 31%</td></tr>
+              <tr><td class="pid">PTR-0097</td><td class="pname">X (Twitter) Signal Group</td><td>MENA</td><td class="tier">RevShare · 40%</td><td><span class="pill churned">Churned</span></td><td class="trend-down">▼ 9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ACTIVATION -->
+      <div class="panel-view" id="view-activation">
+        <div class="card">
+          <div class="card-head"><div><h3>HubSpot Activation Sequence</h3><div class="sub">Day 1 / 3 / 7 touchpoints driving the retention gains above</div></div></div>
+          <div class="funnel">
+            <div class="fbar-row"><div class="flabel">Day 1 — Welcome & setup</div><div class="fbar-track"><div class="fbar-fill" style="width:100%; background:#2D6CDF;"></div></div><div class="fval">100%</div></div>
+            <div class="fbar-row"><div class="flabel">Day 3 — First activation check</div><div class="fbar-track"><div class="fbar-fill" style="width:78%; background:#5B8DEA;"></div></div><div class="fval">78%</div></div>
+            <div class="fbar-row"><div class="flabel">Day 7 — Performance review</div><div class="fbar-track"><div class="fbar-fill" style="width:61%; background:#16A34A;"></div></div><div class="fval">61%</div></div>
+          </div>
+          <div class="note">Stages reflect the real HubSpot Day 1/3/7 automation; completion % modeled to show typical drop-off shape.</div>
+        </div>
+      </div>
+
+      <!-- DEAL ROOM -->
+      <div class="panel-view" id="view-deal">
+        <div class="card">
+          <div class="deal-head">
+            <div><div class="did">DEAL-0138 · FINTECH AFFILIATE PARTNER (NDA)</div><h2>Hybrid restructure closes a stalled crypto/trading creator</h2></div>
+            <span class="status-closed">● CLOSED — 9 DAYS</span>
+          </div>
+          <div class="deal-grid">
+            <div class="deal-cell"><div class="k">Context</div><p>Mid-tier crypto/trading content creator, 60K+ combined following. High-volume but historically low-converting traffic. In talks with two competing platforms.</p></div>
+            <div class="deal-cell"><div class="k">Objection</div><p>Wary of flat CPA (traffic-quality penalties) and wary of pure RevShare (no downside protection if early conversion was slow).</p></div>
+            <div class="deal-cell"><div class="k">Negotiation Lever</div><p>Rebuilt as hybrid: reduced upfront CPA plus a RevShare kicker stepping up past a 90-day active-trader threshold, paired with the Day 1/3/7 activation sequence.</p></div>
+            <div class="deal-cell"><div class="k">Outcome</div><p>Signed within 9 days vs. a 3+ week stall. Structure was later adopted as the standard hybrid tier for new partners.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const navItems = document.querySelectorAll('.nav-item');
+  const views = document.querySelectorAll('.panel-view');
+  const titles = { overview:'Overview', pipeline:'Partner Pipeline', activation:'Activation Sequence', deal:'Deal Room' };
+  navItems.forEach(item=>{
+    item.addEventListener('click', ()=>{
+      navItems.forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+      const key = item.dataset.view;
+      views.forEach(v=>v.classList.remove('active'));
+      document.getElementById('view-'+key).classList.add('active');
+      document.getElementById('viewTitle').textContent = titles[key];
+      document.getElementById('viewPath').textContent = 'malta-fintech / ' + key;
+    });
+  });
+
+  const gridColor = '#EEF0F3';
+  const textColor = '#9AA2AE';
+  Chart.defaults.font.family = "'IBM Plex Mono','JetBrains Mono',monospace";
+  Chart.defaults.font.size = 10.5;
+  Chart.defaults.color = textColor;
+
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: ['M1','M2','M3','M4','M5','M6'],
+      datasets: [{ data:[100,104,117,138,165,201], borderColor:'#2D6CDF', backgroundColor:'rgba(45,108,223,0.08)',
+        fill:true, tension:0.35, pointRadius:3, pointBackgroundColor:'#2D6CDF', borderWidth:2 }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      scales:{ x:{ grid:{display:false} }, y:{ grid:{color:gridColor} } } }
+  });
+
+  new Chart(document.getElementById('churnChart'), {
+    type: 'bar',
+    data: { labels:['Before','After'], datasets:[{ data:[40,25],
+      backgroundColor:['#F3B6B6','#8FE0B8'], borderColor:['#DC2626','#16A34A'], borderWidth:1.5, borderRadius:5, maxBarThickness:60 }] },
+    options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      scales:{ x:{ grid:{color:gridColor}, ticks:{callback:v=>v+'%'}, beginAtZero:true, max:50 }, y:{ grid:{display:false} } } }
+  });
+</script>
+</body>
+</html>
