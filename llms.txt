@@ -1,0 +1,14 @@
+# Cync Digital
+
+> Portfolio and working practice of Naimur Rahman Ferdous — an affiliate, partnerships, and business development practitioner actively interviewing for full-time roles.
+
+Cync Digital showcases real, hands-on work: partner program builds, deal sourcing and negotiation, commission-structure design (CPA/RevShare/Hybrid), and reporting systems. It is a self-directed practice, not an agency taking on client work.
+
+## Pages
+- [Home](https://cync.digital/index.html): Overview and introduction
+- [About](https://cync.digital/about.html): Background and approach
+- [Services](https://cync.digital/services.html): Areas of work — business development, affiliate & partner marketing, performance marketing, growth marketing, GTM strategy
+- [Work](https://cync.digital/work.html): Engagement history and case detail
+- [Process](https://cync.digital/process.html): How engagements are run
+- [Credentials](https://cync.digital/credentials.html): Certifications, platforms, and tools
+- [Contact](https://cync.digital/contact.html): Get in touch
