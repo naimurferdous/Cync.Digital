@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Malta Fintech — Affiliate Growth Console</title>
+<meta name="description" content="Engagement console for the Malta fintech affiliate growth program, with partner pipeline, activation sequence, and deal room reporting.">
+<meta name="robots" content="noindex,nofollow">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root{
@@ -49,7 +51,7 @@
   .content{ padding:26px 30px 60px; max-width:1240px; }
   .panel-view{ display:none; }
   .panel-view.active{ display:block; }
-  .kpi-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px; }
+  .kpi-row{ display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:22px; }
   .kpi-card{ background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
   .kpi-card .top{ display:flex; justify-content:space-between; align-items:flex-start; }
   .kpi-card .lbl{ font-size:11.5px; color:var(--muted); font-weight:500; }
@@ -91,7 +93,13 @@
   .deal-head h2{ font-size:17px; margin-top:4px; }
   @media (max-width:980px){
     .kpi-row{ grid-template-columns:repeat(2,1fr); } .grid-2{ grid-template-columns:1fr; }
-    .deal-grid{ grid-template-columns:1fr; } .sidebar{ display:none; }
+    .deal-grid{ grid-template-columns:1fr; }
+    .shell{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:relative; flex-direction:row; align-items:center; overflow-x:auto; }
+    .brand,.sidebar-foot{ display:none; }
+    .nav{ display:flex; flex-direction:row; padding:8px 10px; gap:4px; flex:none; }
+    .nav .section-lbl{ display:none; }
+    .nav-item{ white-space:nowrap; margin-bottom:0; }
   }
   @media (max-width:640px){
     .content{ padding:16px 16px 50px; }
@@ -142,7 +150,7 @@
     </div>
 
     <div style="background:#FDF2E3; border-bottom:1px solid #E4E7EC; padding:10px 30px; font-size:11.5px; line-height:1.6; color:#6B7280; font-family:'IBM Plex Mono','JetBrains Mono',monospace;">
-      KPIs above and funnel totals are real figures from this engagement. Individual partner rows, chart proportions, and the deal-room writeup below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
+      KPIs above (including $1.2M partner-sourced revenue) and funnel totals are real figures from this engagement. Individual partner rows, chart proportions, and the deal-room writeup below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
     </div>
 
     <div class="content">
@@ -155,11 +163,12 @@
           <div class="kpi-card"><div class="top"><span class="lbl">Retention rate</span><span class="badge">▲ 33%</span></div><div class="val">33%+</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">Churn rate</span><span class="badge">▼ 15pt</span></div><div class="val">40→25%</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">MoM conversion growth</span><span class="badge">▲ ramp</span></div><div class="val">20%+</div></div>
+          <div class="kpi-card"><div class="top"><span class="lbl">Partner-sourced revenue</span><span class="badge">15mo</span></div><div class="val">$1.2M</div></div>
         </div>
 
         <div class="card">
           <div class="card-head"><div><h3>Role Summary</h3><div class="sub">Affiliate Marketing Manager — International Fintech, Malta</div></div></div>
-          <p style="font-size:13px; line-height:1.7; color:#374151;">Drove market expansion by developing and maintaining relationships with 240+ registered partners and 80+ active collaborators across multiple regions — recruiting content creators, publishers, and strategic partners across YouTube, Telegram, Discord, and X. Negotiated CPA and hybrid structures contributing to 20%+ MoM first-time conversion growth post-onboarding ramp, and streamlined onboarding using HubSpot automation across Day 1/3/7 touchpoints.</p>
+          <p style="font-size:13px; line-height:1.7; color:#374151;">Drove market expansion by developing and maintaining relationships with 240+ registered partners and 80+ active collaborators across multiple regions — recruiting content creators, publishers, and strategic partners across YouTube, Telegram, Discord, and X. Negotiated CPA and hybrid structures contributing to $1.2M in partner-sourced revenue over 15 months and 20%+ MoM first-time conversion growth post-onboarding ramp, and streamlined onboarding using HubSpot automation across Day 1/3/7 touchpoints.</p>
         </div>
 
         <div class="grid-2">

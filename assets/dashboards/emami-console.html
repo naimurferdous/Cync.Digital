@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emami Bangladesh — Trade & Distribution Console</title>
+<meta name="description" content="Engagement console for the Emami Bangladesh trade and distribution partnership, with deal, pipeline, and activation reporting.">
+<meta name="robots" content="noindex,nofollow">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root{
@@ -50,7 +52,7 @@
   .content{ padding:26px 30px 60px; max-width:1240px; }
   .panel-view{ display:none; }
   .panel-view.active{ display:block; }
-  .kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+  .kpi-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px; }
   .kpi-card{ background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
   .kpi-card .top{ display:flex; justify-content:space-between; align-items:flex-start; }
   .kpi-card .lbl{ font-size:11.5px; color:var(--muted); font-weight:500; }
@@ -84,8 +86,14 @@
   .fit-card h4{ font-size:14px; margin-bottom:8px; }
   .fit-card p{ font-size:12.5px; color:var(--muted); line-height:1.6; }
   @media (max-width:980px){
-    .kpi-row{ grid-template-columns:repeat(2,1fr); } .grid-2{ grid-template-columns:1fr; }
-    .fit-grid{ grid-template-columns:1fr; } .sidebar{ display:none; }
+    .kpi-row{ grid-template-columns:repeat(3,1fr); } .grid-2{ grid-template-columns:1fr; }
+    .fit-grid{ grid-template-columns:1fr; }
+    .shell{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:relative; flex-direction:row; align-items:center; overflow-x:auto; }
+    .brand,.sidebar-foot{ display:none; }
+    .nav{ display:flex; flex-direction:row; padding:8px 10px; gap:4px; flex:none; }
+    .nav .section-lbl{ display:none; }
+    .nav-item{ white-space:nowrap; margin-bottom:0; }
   }
   @media (max-width:640px){
     .content{ padding:16px 16px 50px; }
@@ -136,7 +144,7 @@
     </div>
 
     <div style="background:#FDF2E3; border-bottom:1px solid #E4E7EC; padding:10px 30px; font-size:11.5px; line-height:1.6; color:#6B7280; font-family:'IBM Plex Mono','JetBrains Mono',monospace;">
-      KPIs above (50+ partners, 20+ campaigns, 25% spend owned, 5 launches) are real figures from this role. Chart proportions, product names, and campaign splits below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
+      KPIs above (50+ partners, 20+ campaigns, 25% spend owned, 5 launches) are real figures from this role. The 22% secondary sales lift is a modeled representative figure illustrating campaign-driven growth over the engagement window, not exported sales data. Chart proportions, product names, and campaign splits below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
     </div>
 
     <div class="content">
@@ -148,6 +156,7 @@
           <div class="kpi-card"><div class="top"><span class="lbl">Campaigns launched</span><span class="badge">executed</span></div><div class="val">20+</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">Trade marketing spend owned</span><span class="badge">budget</span></div><div class="val">25%</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">On-time product launches</span><span class="badge">▲ 100%</span></div><div class="val">5 / 5</div></div>
+          <div class="kpi-card"><div class="top"><span class="lbl">Secondary sales lift</span><span class="badge">▲ modeled</span></div><div class="val">22%</div></div>
         </div>
 
         <div class="card">
@@ -170,7 +179,7 @@
       <div class="panel-view" id="view-network">
         <div class="grid-2">
           <div class="card">
-            <div class="card-head"><div><h3>Secondary Sales Lift by Campaign Wave</h3><div class="sub">Modeled trend reflecting campaign-driven visibility gains</div></div></div>
+            <div class="card-head"><div><h3>Secondary Sales Lift by Campaign Wave</h3><div class="sub">Modeled trend &mdash; cumulative 22% lift across the campaign window</div></div></div>
             <div class="chart-box"><canvas id="salesChart"></canvas></div>
           </div>
           <div class="card">
@@ -178,7 +187,7 @@
             <div class="chart-box"><canvas id="tierChart"></canvas></div>
           </div>
         </div>
-        <div class="note">Wave-by-wave proportions are modeled; the 50+ partner and 20+ campaign totals are real.</div>
+        <div class="note">Wave-by-wave proportions and the 22% cumulative lift are modeled representative figures; the 50+ partner and 20+ campaign totals are real.</div>
       </div>
 
       <!-- CAMPAIGNS -->
@@ -250,7 +259,7 @@
     data: {
       labels: ['Wave 1','Wave 2','Wave 3','Wave 4','Wave 5','Wave 6'],
       datasets: [{
-        data: [100,108,119,131,140,152],
+        data: [100,104,109,114,118,122],
         borderColor:'#0D9488', backgroundColor:'rgba(13,148,136,0.08)',
         fill:true, tension:0.35, pointRadius:3, pointBackgroundColor:'#0D9488', borderWidth:2
       }]

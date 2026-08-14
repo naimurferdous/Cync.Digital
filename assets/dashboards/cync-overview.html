@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cync Digital — Partner Performance Console</title>
+<meta name="description" content="Reference build of a partner performance reporting console, showing overview KPIs, engagement history, and partner breakdowns for Cync Digital.">
+<meta name="robots" content="noindex,nofollow">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root{
@@ -28,6 +30,13 @@
   .navtabs{ display:flex; gap:20px; flex-wrap:wrap; }
   .navtabs span{ font-size:12.5px; color:#8891A0; padding:14px 0; border-bottom:2px solid transparent; }
   .navtabs span.active{ color:#fff; border-bottom-color:var(--signal); }
+  .navtabs span.linked{ cursor:pointer; }
+  .navtabs span.linked:hover{ color:#fff; }
+  .navtabs span.disabled{ opacity:0.4; cursor:default; }
+  tbody tr.linkrow{ cursor:pointer; }
+  tbody tr.linkrow:hover{ background:#FAFBFC; }
+  tbody tr.linkrow td:first-child{ color:var(--blue); font-weight:600; }
+  tbody tr.linkrow .arrow{ font-size:10px; color:var(--muted-2); margin-left:6px; }
 
   .topbar{ background:var(--card); border-bottom:1px solid var(--border); padding:12px 24px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; }
   .topbar .path{ font-size:11.5px; color:var(--muted-2); font-family:var(--mono); }
@@ -39,7 +48,7 @@
 
   .content{ padding:20px 24px 60px; max-width:1280px; margin:0 auto; }
 
-  .kpi-row{ display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:20px; }
+  .kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
   .kpi-card{ background:var(--card); border:1px solid var(--border); border-radius:9px; padding:14px 16px; }
   .kpi-card .lbl{ font-size:10.5px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.04em; }
   .kpi-card .val{ font-family:var(--mono); font-size:21px; font-weight:700; margin-top:8px; color:var(--text); }
@@ -71,7 +80,8 @@
     .grid-2{ grid-template-columns:1fr; }
   }
   @media (max-width:640px){
-    .navtabs{ display:none; }
+    .navtabs{ gap:12px; }
+    .navtabs span{ font-size:11px; padding:10px 0; }
     .content{ padding:16px 16px 50px; }
     .kpi-row{ grid-template-columns:1fr 1fr; gap:10px; }
     .kpi-card{ padding:12px 12px; }
@@ -86,12 +96,12 @@
 <div class="navbar">
   <div class="brand"><div class="mark">C</div><div class="name">CYNC DIGITAL</div></div>
   <div class="navtabs">
-    <span class="active">Overview</span>
-    <span>Engagements</span>
-    <span>Partners</span>
-    <span>Channels</span>
-    <span>Regions</span>
-    <span>Deal Room</span>
+    <span class="active linked" data-target="top">Overview</span>
+    <span class="linked" data-target="engagementCard">Engagements</span>
+    <span class="disabled" title="No standalone partner directory in this view yet">Partners</span>
+    <span class="linked" data-target="channelCard">Channels</span>
+    <span class="linked" data-target="regionCard">Regions</span>
+    <span class="linked" data-href="malta-fintech-console.html" title="Opens Malta Fintech's Deal Room — the only engagement with one built">Deal Room</span>
   </div>
 </div>
 
@@ -107,7 +117,7 @@
   <strong>Career performance view.</strong> KPI totals and the By Engagement table below are real career figures. Channel mix and regional split are representative breakdowns of the real totals, not exported reports.
 </div>
 
-<div class="content">
+<div class="content" id="top">
 
   <div class="kpi-row">
     <div class="kpi-card"><div class="lbl">Partners</div><div class="val">340+</div><div class="sub">relationships built</div></div>
@@ -116,9 +126,10 @@
     <div class="kpi-card"><div class="lbl">MoM Growth</div><div class="val">20%+</div><div class="sub">conversion growth</div></div>
     <div class="kpi-card"><div class="lbl">Campaigns</div><div class="val">20+</div><div class="sub">launched, Emami</div></div>
     <div class="kpi-card"><div class="lbl">Engagements</div><div class="val">4</div><div class="sub">2023 – present</div></div>
+    <div class="kpi-card"><div class="lbl">Partner Revenue (actual)</div><div class="val">$1.2M</div><div class="sub">sourced, trailing 15mo</div></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="engagementCard">
     <div class="card-head"><h3>By Engagement</h3><span class="chip">Indexed to 100 · 2023–2026</span></div>
     <div class="grid-2" style="margin-bottom:0;">
       <div class="chart-box"><canvas id="engagementChart"></canvas></div>
@@ -126,10 +137,10 @@
         <table>
           <thead><tr><th>Engagement</th><th>Partners</th><th>Structure</th></tr></thead>
           <tbody>
-            <tr><td>ITLABS22</td><td class="mono">100+</td><td>CPA/RevShare/Hybrid</td></tr>
-            <tr><td>Emami Bangladesh</td><td>50+ trade</td><td>Trade &amp; Distribution</td></tr>
-            <tr><td>Malta Fintech</td><td>240+</td><td>CPA/Hybrid</td></tr>
-            <tr><td>Cync Digital</td><td>Consulting</td><td>Strategy build</td></tr>
+            <tr class="linkrow" onclick="window.open('itlabs22-console.html','_blank')"><td>ITLABS22 <span class="arrow">↗</span></td><td class="mono">100+</td><td>CPA/RevShare/Hybrid</td></tr>
+            <tr class="linkrow" onclick="window.open('emami-console.html','_blank')"><td>Emami Bangladesh <span class="arrow">↗</span> <span style="color:var(--green);font-size:10.5px;font-weight:700;">+22%</span></td><td>50+ trade</td><td>Trade &amp; Distribution</td></tr>
+            <tr class="linkrow" onclick="window.open('malta-fintech-console.html','_blank')"><td>Malta Fintech <span class="arrow">↗</span></td><td>240+</td><td>CPA/Hybrid</td></tr>
+            <tr class="linkrow" onclick="window.open('cync-digital-console.html','_blank')"><td>Cync Digital <span class="arrow">↗</span></td><td>Consulting</td><td>Strategy build</td></tr>
             <tr class="totals"><td>Totals</td><td>340+</td><td></td></tr>
           </tbody>
         </table>
@@ -138,12 +149,12 @@
   </div>
 
   <div class="grid-2">
-    <div class="card">
+    <div class="card" id="channelCard">
       <div class="card-head"><h3>By Channel</h3><span class="chip">Representative mix</span></div>
       <div class="chart-box"><canvas id="channelChart"></canvas></div>
       <div class="note">Mix is a representative breakdown of recruitment channels used across engagements (creator/KOL, publisher networks, trade &amp; distribution, direct/community) — the 340+ total is real.</div>
     </div>
-    <div class="card">
+    <div class="card" id="regionCard">
       <div class="card-head"><h3>By Region</h3><span class="chip">Representative mix</span></div>
       <div class="region-row"><div class="rname">APAC</div><div class="rtrack"><div class="rfill" style="width:34%;"></div></div><div class="rval">34%</div></div>
       <div class="region-row"><div class="rname">EU</div><div class="rtrack"><div class="rfill" style="width:29%;"></div></div><div class="rval">29%</div></div>
@@ -156,6 +167,16 @@
 </div>
 
 <script>
+  document.querySelectorAll('.navtabs span.linked').forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.dataset.href) { window.open(tab.dataset.href, '_blank'); return; }
+      document.querySelectorAll('.navtabs span').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      const target = document.getElementById(tab.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
   Chart.defaults.font.family = "'IBM Plex Mono','JetBrains Mono',monospace";
   Chart.defaults.font.size = 10.5;
   Chart.defaults.color = '#9AA2AE';
