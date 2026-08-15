@@ -126,7 +126,6 @@
       <div class="nav-item active" data-view="overview"><span class="ic">◱</span> Overview</div>
       <div class="nav-item" data-view="network"><span class="ic">⇄</span> Distribution Network</div>
       <div class="nav-item" data-view="campaigns"><span class="ic">▤</span> Campaigns & Launches</div>
-      <div class="nav-item" data-view="budget"><span class="ic">◈</span> Budget Ownership</div>
     </div>
     <div class="sidebar-foot">
       <div class="who"><div class="avatar">NF</div><div><div class="n">Naimur Ferdous</div><div class="r">Sr. Business Development Exec.</div></div></div>
@@ -144,7 +143,7 @@
     </div>
 
     <div style="background:#FDF2E3; border-bottom:1px solid #E4E7EC; padding:10px 30px; font-size:11.5px; line-height:1.6; color:#6B7280; font-family:'IBM Plex Mono','JetBrains Mono',monospace;">
-      KPIs above (50+ partners, 20+ campaigns, 25% spend owned, 5 launches) are real figures from this role. The 22% secondary sales lift is a modeled representative figure illustrating campaign-driven growth over the engagement window, not exported sales data. Chart proportions, product names, and campaign splits below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
+      KPIs above (50+ partners, 20+ campaigns, 5 launches) are real figures from this role. The 22% secondary sales lift is a modeled representative figure illustrating campaign-driven growth over the engagement window, not exported sales data. Chart proportions, product names, and campaign splits below are reconstructed to demonstrate reporting fluency &mdash; not exported data.
     </div>
 
     <div class="content">
@@ -154,14 +153,13 @@
         <div class="kpi-row">
           <div class="kpi-card"><div class="top"><span class="lbl">Trade & distribution partners</span><span class="badge">▲ network</span></div><div class="val">50+</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">Campaigns launched</span><span class="badge">executed</span></div><div class="val">20+</div></div>
-          <div class="kpi-card"><div class="top"><span class="lbl">Trade marketing spend owned</span><span class="badge">budget</span></div><div class="val">25%</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">On-time product launches</span><span class="badge">▲ 100%</span></div><div class="val">5 / 5</div></div>
           <div class="kpi-card"><div class="top"><span class="lbl">Secondary sales lift</span><span class="badge">▲ modeled</span></div><div class="val">22%</div></div>
         </div>
 
         <div class="card">
           <div class="card-head"><div><h3>Role Summary</h3><div class="sub">Sr. Business Development Executive — Trade & Distribution</div></div></div>
-          <p style="font-size:13px; line-height:1.7; color:#374151;">Drove partnership performance across a 50+ partner trade and distribution network for a leading personal care portfolio, launching 20+ campaigns that lifted secondary sales and channel visibility. Held direct budget ownership over 25% of trade marketing spend, running ROI tracking and allocation decisions to maximize partner campaign returns, and delivered 5 product launches on time by tightening onboarding and cross-team coordination.</p>
+          <p style="font-size:13px; line-height:1.7; color:#374151;">Drove partnership performance across a 50+ partner trade and distribution network for a leading personal care portfolio, launching 20+ campaigns that lifted secondary sales and channel visibility, and delivered 5 product launches on time by tightening onboarding and cross-team coordination.</p>
         </div>
 
         <div class="card">
@@ -212,22 +210,6 @@
         </div>
       </div>
 
-      <!-- BUDGET -->
-      <div class="panel-view" id="view-budget">
-        <div class="fit-grid">
-          <div class="fit-card">
-            <div class="code">OWNERSHIP</div>
-            <h4>25% of Trade Marketing Spend</h4>
-            <p>Held direct budget ownership over a quarter of total trade marketing spend — running ROI tracking and allocation decisions across the partner campaign calendar to maximize returns per partner.</p>
-          </div>
-          <div class="fit-card">
-            <div class="code">PROCESS</div>
-            <h4>Cross-Team Launch Coordination</h4>
-            <p>Built repeatable coordination processes across marketing, distribution, and partner stakeholders — tightening onboarding and activation timelines to keep all 5 product launches on schedule.</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -235,7 +217,7 @@
 <script>
   const navItems = document.querySelectorAll('.nav-item');
   const views = document.querySelectorAll('.panel-view');
-  const titles = { overview:'Overview', network:'Distribution Network', campaigns:'Campaigns & Launches', budget:'Budget Ownership' };
+  const titles = { overview:'Overview', network:'Distribution Network', campaigns:'Campaigns & Launches' };
   navItems.forEach(item=>{
     item.addEventListener('click', ()=>{
       navItems.forEach(i=>i.classList.remove('active'));
