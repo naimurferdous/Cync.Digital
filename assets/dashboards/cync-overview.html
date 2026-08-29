@@ -100,7 +100,6 @@
     <span class="linked" data-target="engagementCard">Engagements</span>
     <span class="linked" data-target="channelCard">Channels</span>
     <span class="linked" data-target="regionCard">Regions</span>
-    <span class="linked" data-href="malta-fintech-console.html" title="Opens Malta Fintech's Deal Room — the only engagement with one built">Deal Room</span>
   </div>
 </div>
 
@@ -119,12 +118,11 @@
 <div class="content" id="top">
 
   <div class="kpi-row">
-    <div class="kpi-card"><div class="lbl">Partners</div><div class="val">340+</div><div class="sub">relationships built</div></div>
-    <div class="kpi-card"><div class="lbl">Retention</div><div class="val">33%+</div><div class="sub">active partner rate</div></div>
-    <div class="kpi-card"><div class="lbl">Churn</div><div class="val">40→25%</div><div class="sub">rate reduced</div></div>
-    <div class="kpi-card"><div class="lbl">MoM Growth</div><div class="val">20%+</div><div class="sub">conversion growth</div></div>
+    <div class="kpi-card"><div class="lbl">Partners</div><div class="val">150+</div><div class="sub">relationships built</div></div>
+    <div class="kpi-card"><div class="lbl">Deals Sourced</div><div class="val">50+</div><div class="sub">Emami trade &amp; distribution</div></div>
     <div class="kpi-card"><div class="lbl">Campaigns</div><div class="val">20+</div><div class="sub">launched, Emami</div></div>
-    <div class="kpi-card"><div class="lbl">Engagements</div><div class="val">4</div><div class="sub">2023 – present</div></div>
+    <div class="kpi-card"><div class="lbl">Reporting Speed</div><div class="val">+60%</div><div class="sub">via AI automation, Cync Digital</div></div>
+    <div class="kpi-card"><div class="lbl">Engagements</div><div class="val">3</div><div class="sub">2023 – present</div></div>
   </div>
 
   <div class="card" id="engagementCard">
@@ -137,9 +135,8 @@
           <tbody>
             <tr class="linkrow" onclick="window.open('itlabs22-console.html','_blank')"><td>ITLABS22 <span class="arrow">↗</span></td><td class="mono">100+</td><td>CPA/RevShare/Hybrid</td></tr>
             <tr class="linkrow" onclick="window.open('emami-console.html','_blank')"><td>Emami Bangladesh <span class="arrow">↗</span> <span style="color:var(--green);font-size:10.5px;font-weight:700;">+22%</span></td><td>50+ trade</td><td>Trade &amp; Distribution</td></tr>
-            <tr class="linkrow" onclick="window.open('malta-fintech-console.html','_blank')"><td>Malta Fintech <span class="arrow">↗</span></td><td>240+</td><td>CPA/Hybrid</td></tr>
             <tr class="linkrow" onclick="window.open('cync-digital-console.html','_blank')"><td>Cync Digital <span class="arrow">↗</span></td><td>Consulting</td><td>Strategy build</td></tr>
-            <tr class="totals"><td>Totals</td><td>340+</td><td></td></tr>
+            <tr class="totals"><td>Totals</td><td>150+</td><td></td></tr>
           </tbody>
         </table>
       </div>
@@ -150,14 +147,12 @@
     <div class="card" id="channelCard">
       <div class="card-head"><h3>By Channel</h3><span class="chip">Representative mix</span></div>
       <div class="chart-box"><canvas id="channelChart"></canvas></div>
-      <div class="note">Mix is a representative breakdown of recruitment channels used across engagements (creator/KOL, publisher networks, trade &amp; distribution, direct/community) — the 340+ total is real.</div>
+      <div class="note">Mix is a representative breakdown of recruitment channels used across engagements (creator/publisher, trade &amp; distribution) — the 150+ total is real.</div>
     </div>
     <div class="card" id="regionCard">
       <div class="card-head"><h3>By Region</h3><span class="chip">Representative mix</span></div>
-      <div class="region-row"><div class="rname">APAC</div><div class="rtrack"><div class="rfill" style="width:34%;"></div></div><div class="rval">34%</div></div>
-      <div class="region-row"><div class="rname">EU</div><div class="rtrack"><div class="rfill" style="width:29%;"></div></div><div class="rval">29%</div></div>
-      <div class="region-row"><div class="rname">MENA</div><div class="rtrack"><div class="rfill" style="width:18%;"></div></div><div class="rval">18%</div></div>
-      <div class="region-row"><div class="rname">South Asia</div><div class="rtrack"><div class="rfill" style="width:19%;"></div></div><div class="rval">19%</div></div>
+      <div class="region-row"><div class="rname">EU / Remote</div><div class="rtrack"><div class="rfill" style="width:67%;"></div></div><div class="rval">67%</div></div>
+      <div class="region-row"><div class="rname">South Asia</div><div class="rtrack"><div class="rfill" style="width:33%;"></div></div><div class="rval">33%</div></div>
       <div class="note">Regional split is a representative estimate across engagements — not an exported geo report.</div>
     </div>
   </div>
@@ -183,8 +178,8 @@
   new Chart(document.getElementById('engagementChart'), {
     type: 'line',
     data: {
-      labels: ['ITLABS22\n2023','Emami\n2024','Malta\n(start)','Malta\nQ2','Malta\nQ3','Malta\n(current)'],
-      datasets: [{ data:[100,100,145,190,225,240], borderColor:'#E9A23B', backgroundColor:'rgba(233,162,59,0.10)',
+      labels: ['ITLABS22\n2023','Emami\n2024','Cync Digital\n2026'],
+      datasets: [{ data:[100,150,150], borderColor:'#E9A23B', backgroundColor:'rgba(233,162,59,0.10)',
         fill:true, tension:0.35, pointRadius:3, pointBackgroundColor:'#E9A23B', borderWidth:2 }]
     },
     options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
@@ -194,8 +189,8 @@
   new Chart(document.getElementById('channelChart'), {
     type: 'doughnut',
     data: {
-      labels: ['Creator / KOL','Publisher networks','Trade & distribution','Direct / community'],
-      datasets: [{ data:[35,25,22,18], backgroundColor:['#E9A23B','#2D6CDF','#0D9488','#9AA2AE'], borderWidth:0 }]
+      labels: ['Creator / publisher','Trade & distribution'],
+      datasets: [{ data:[67,33], backgroundColor:['#E9A23B','#0D9488'], borderWidth:0 }]
     },
     options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:10, padding:12}}} }
   });
